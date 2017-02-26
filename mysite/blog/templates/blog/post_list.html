@@ -29,8 +29,13 @@
         {% if lista_post %}
             {% for post in lista_post %}
                 <li>
-                    Post #{{ forloop.counter }}: {{ post.title }}
+                    Post #{{ forloop.counter }}: </p>
+                         Publicado: {{ post.published_date }} </p>
+                         Titulo: {{ post.title }} </p>
+                         Autor: {{ post.author }} </p>
+                         Mensaje: </h3> {{ post.text }} </p>
                 </li>
+                <br />
             {% endfor %}
         {% endif %}
     </div>
