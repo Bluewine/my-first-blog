@@ -29,7 +29,7 @@
         {% if lista_post %}
             {% for post in lista_post %}
                 <li>
-                    Post #{{ forloop.counter }}: post.title
+                    Post #{{ forloop.counter }}: {{ post.title }}
                 </li>
             {% endfor %}
         {% endif %}
