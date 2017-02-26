@@ -23,5 +23,15 @@
         <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non m
         i porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut f.</p>
     </div>
+
+    <div>
+        {% if lista_post %}
+            {% for post in lista_post %}
+                <li>
+                    Post #{{ forloop.counter }}: post.title
+                </li>
+            {% endfor %}
+        {% endif %}
+    </div>
 </body>
 </html>
