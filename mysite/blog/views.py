@@ -1,24 +1,50 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 
 from .models import *
 from .forms import PostFormulario
 
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now())\
-                .order_by('published_date')
-    template = 'blog/post_list.html'
-    context = { 'lista_post': posts }
+    """
+    Lista de todos los post almacenados en la BD.
 
-    return render(request, template, context)
+    Es la pagina inicial.
+    """
+
+    if request.user.has_perm('view_specific_permission'):
+        posts = Post.objects.filter(published_date__lte=timezone.now()) \
+            .order_by('published_date')
+        template = 'blog/post_list.html'
+        context = {'lista_post': posts}
+
+        return render(request, template, context)
+    else:
+        return HttpResponse("No tienes permiso adecuado.")
 
 
 def post_detail(request, post_id):
+    """
+    Vista de detalle de un post.
+
+    Muestra los detalles de un post seleccionado.
+
+    :param request: Objeto por defecto que recibe una funcion vista.
+    :param post_id: Numero de post.
+    :return: Una pogina HTML.
+    """
     post = get_object_or_404(Post, pk=post_id)
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
 def post_new(request):
+    """
+    Vista de nuevos post.
+
+    Es la funcion vista usada para crear nuevos post.
+
+    :param request: Objeto por defecto.
+    :return: Una pag HTML
+    """
     if request.method == "POST":
         form = PostFormulario(request.POST)
         if form.is_valid():
